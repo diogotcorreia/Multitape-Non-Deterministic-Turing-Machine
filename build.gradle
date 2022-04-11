@@ -1,0 +1,25 @@
+plugins {
+    id 'application'
+}
+
+sourceCompatibility = 17
+targetCompatibility = 17
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'ist.turingmachine.Main'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ist.turingmachine.Main'
+    }
+}

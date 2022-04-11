@@ -122,3 +122,4 @@ Let's use the example above.
 ## Changes from Upstream
 
 - Remove built jar from repository
+- Use Gradle
