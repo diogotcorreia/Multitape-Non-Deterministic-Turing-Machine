@@ -119,4 +119,6 @@ Let's use the example above.
 * If you, for example, use ```3``` as initial input, the machine will abort because there are only 2 possible transitions for state ```0``` and head ```0```.
 * If you, for example, use ```2``` as initial input and after machine stops you don't add any values to it and just run, the machine will run normally finishing in 4 transitions and decision sequence ```2111```.
 
+## Changes from Upstream
 
+- Remove built jar from repository
