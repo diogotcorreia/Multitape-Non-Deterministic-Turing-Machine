@@ -123,3 +123,4 @@ Let's use the example above.
 
 - Remove built jar from repository
 - Use Gradle
+- Add dark mode theme

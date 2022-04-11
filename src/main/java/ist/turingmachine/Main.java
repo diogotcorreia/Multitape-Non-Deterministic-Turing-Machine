@@ -1,8 +1,12 @@
 package ist.turingmachine;
 
-public class Main extends TM_Gui {
-    public static void main(String[] args)  throws CloneNotSupportedException {
-        Prepare();
-        Props();
+import com.formdev.flatlaf.FlatDarkLaf;
+
+public class Main {
+    public static void main(String[] args)  {
+        FlatDarkLaf.setup();
+
+        TM_Gui.Prepare();
+        TM_Gui.Props();
     }
 }
