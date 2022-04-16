@@ -1,49 +1,57 @@
 # Multitape Non Deterministic Turing Machine Simulator
-An ```accept state``` seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to [Syntax](#syntax) and with no constraints on the amount of tapes used. In non deterministic cases it uses [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) to find a path to a halting state, preferably a halt-accept state.
+
+An `accept state` seeking multitape non deterministic Turing machine simulator allows you to write and execute any Turing machine program with respect to [Syntax](#syntax) and with no constraints on the amount of tapes used. In non deterministic cases it uses [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search) to find a path to a halting state, preferably a halt-accept state.
 
 ## Getting Started
+
 To obtain a copy of the simulator just download the `.jar` file or compile the project yourself.
 
 ### Prerequisites
-* [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
+
+- [Java 17 or newer](https://www.oracle.com/java/technologies/downloads/#java17)
 
 ### Usage
+
 To open the simulator:
 
-```
+```bash
 java -jar "path to .jar"
 ```
 
-###Syntax
+### Syntax
+
 Syntax inspired by [Anthony Morphett](http://morphett.info/turing/turing.html).
 
 Any program must follow the structure:
 
- ```
- <current state> <character read> <character written> <direction to move> <state to transition into>
- ```
-Use ```_``` to represent spaces, and ```*``` instead of a character read to mean any character, or instead of a character written/direction to mean no change. Refer to ```Examples``` folder to clarify.
+```
+<current state> <character read> <character written> <direction to move> <state to transition into>
+```
 
+Use `_` to represent spaces, and `*` instead of a character read to mean any character, or instead of a character written/direction to mean no change. Refer to `Examples` folder to clarify.
+
+Everything after a `;` will be considered a comment.
 
 ## User Guide
 
-This simulator needs a program and a certain amount of tapes. The number of tapes depends on the program. 
+This simulator needs a program and a certain amount of tapes. The number of tapes depends on the program.
 When opened the simulator shows a GUI where you will be working.
 
-![Alt text](Images/turingmachine2021.png?raw=true)
+![Program UI Screenshot](Images/turingmachine2021.png?raw=true)
 
 ### Meanings
 
 1. Transitions: the highlighted symbol indicates the head of a tape;
 2. Program;
 3. Controls:
-    - **Steps**: how many transitions have been executed until current moment;
-    - **Run**: executes the program;
-    - **Run at full speed**: runs as fast as your computer allows;
-    - **Step**: executes one transition;
-    - **Pause/Resume**: pauses/resumes the execution;
-    - **Set**: initiates the tapes and machine;
-    - **Copy output**: copies the text of the output in the Tapes section.
+
+   - **Steps**: how many transitions have been executed until current moment;
+   - **Run**: executes the program;
+   - **Run at full speed**: runs as fast as your computer allows;
+   - **Step**: executes one transition;
+   - **Pause/Resume**: pauses/resumes the execution;
+   - **Set**: initiates the tapes and machine;
+   - **Copy output**: copies the text of the output in the Tapes section.
 
 4. Tapes: put one in each line;
 5. Pre-execution controls:
@@ -53,7 +61,7 @@ When opened the simulator shows a GUI where you will be working.
    - **Pick every step**: in non deterministic cases the machine will offer you to pick any possible transition you like;
    - **Open**: opens a program from your computer;
    - **Save**: saves the program written in **Program** area to your computer.
- 
+
 6. Syntax: syntax to follow on creation of a program;
 7. Log: illustrates all executed transitions until current moment.
 
@@ -68,18 +76,18 @@ When opened the simulator shows a GUI where you will be working.
 
 Assuming that you know what a [non deterministic Turing machine](https://en.wikipedia.org/wiki/Non-deterministic_Turing_machine) is and have read about [Breadth-first search](https://en.wikipedia.org/wiki/Breadth-first_search), clarification on what **Decision Sequence** is and how to use it follows:
 
-* When the Turing machine halts the decision sequence's content will be a string of numbers which explains the path in a tree from the initiation to the halting state;
-* If not yet in halting state, the decision sequence will keep updating showing the path followed until current moment;
+- When the Turing machine halts the decision sequence's content will be a string of numbers which explains the path in a tree from the initiation to the halting state;
+- If not yet in halting state, the decision sequence will keep updating showing the path followed until current moment;
 
 It is possible to transform a non deterministic problem into a deterministic one using the decision sequence.
 Before initiating the machine you should type in the path you want the machine to take. It will follow it strictly and will perform every transition mentioned (if such exists).
 
-It is **possible** to add values to the decision sequence in following cases:  
+It is **possible** to add values to the decision sequence in following cases:
 
 1. Before initiating the tapes and the machine.
 2. Every time machine stops executing previous given sequence.
 
-It is **not possible** to add values to the decision sequence in following cases:  
+It is **not possible** to add values to the decision sequence in following cases:
 
 1. An initial sequence wasn't given.
 2. An initial sequence was given, but the machine didn't finish its execution yet.
@@ -89,38 +97,42 @@ It is **not possible** to add values to the decision sequence in following cases
 
 #### No Initial Input
 
-For the sake of a simple example let's use a not well formed non deterministic program and a single tape ```011``` with its head on ```0```.
-Program:  
+For the sake of a simple example let's use a not well formed non deterministic program and a single tape `011` with its head on `0`.
+Program:
 
-0 0 a r 0  
-0 0 b r 1  
-1 0 a r 1  
-1 1 a r 1  
-1 _ _ * halt  
+```
+0 0 a r 0
+0 0 b r 1
+1 0 a r 1
+1 1 a r 1
+1 _ _ * halt
+```
 
-Transition | Tape Content | Head | Decision Sequence
----------- | ------------ | ---- | -----------------
-Initiation | 011          | 0    |
-0 0 a r 0  | a11          | 1    | 1
-Backtrack  | 011          | 0    |
-0 0 b r 1  | b11          | 1    | 2
-1 1 a r 1  | ba1          | 1    | 21
-1 1 a r 1  | baa*_*       | *_*  | 211 
-1 *_* *_* * halt | baa*_* | *_*  | 2111
+| Transition         | Tape Content | Head  | Decision Sequence |
+| ------------------ | ------------ | ----- | ----------------- |
+| Initiation         | `011`        | `0`   |
+| `0 0 a r 0`        | `a11`        | `1`   | `1`               |
+| Backtrack          | `011`        | `0`   |
+| `0 0 b r 1`        | `b11`        | `1`   | `2`               |
+| `1 1 a r 1`        | `ba1`        | `1`   | `21`              |
+| `1 1 a r 1`        | `baa*_*`     | `___` | `211`             |
+| `1 ___ ___ * halt` | `baa*_*`     | `___` | `2111`            |
 
-As the last transition leads to a halting state the execution finishes and the final decision sequence is ```2111```.
+As the last transition leads to a halting state the execution finishes and the final decision sequence is `2111`.
 
 #### With Initial Input
 
 Let's use the example above.
 
-* If you use ```2111``` as initial input in decision sequence, the machine will halt within 4 transitions because this sequence will take it to a halting state.
-* If you, for example, use ```211``` as initial input, the machine will stop after those 3 transitions and you can add values to it before running it again.
-* If you, for example, use ```3``` as initial input, the machine will abort because there are only 2 possible transitions for state ```0``` and head ```0```.
-* If you, for example, use ```2``` as initial input and after machine stops you don't add any values to it and just run, the machine will run normally finishing in 4 transitions and decision sequence ```2111```.
+- If you use `2111` as initial input in decision sequence, the machine will halt within 4 transitions because this sequence will take it to a halting state.
+- If you, for example, use `211` as initial input, the machine will stop after those 3 transitions and you can add values to it before running it again.
+- If you, for example, use `3` as initial input, the machine will abort because there are only 2 possible transitions for state `0` and head `0`.
+- If you, for example, use `2` as initial input and after machine stops you don't add any values to it and just run, the machine will run normally finishing in 4 transitions and decision sequence `2111`.
 
 ## Changes from Upstream
 
 - Remove built jar from repository
 - Use Gradle
 - Add dark mode theme
+- Bump minimum Java version to 17
+- Fix formatting on README
